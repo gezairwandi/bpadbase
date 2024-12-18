@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.geco.bpadapp.data.models.Asn
-import com.geco.bpadapp.data.models.Asset
 import com.geco.bpadapp.data.models.Kendaraan
 import com.geco.bpadapp.data.repositories.AsnRepository
 import com.geco.bpadapp.data.repositories.KendaraanRepository
@@ -20,10 +19,6 @@ class KendaraanDashboardViewModel(
 
     private val _kendaraanList = MutableLiveData<List<Kendaraan>>()
     val kendaraanList: LiveData<List<Kendaraan>> get() = _kendaraanList
-
-
-    private val _filteredAssets = MutableLiveData<List<Asset>>()
-    val filteredAssets: LiveData<List<Asset>> get() = _filteredAssets
 
     fun fetchAsnFromFirebase(authToken: String) {
         viewModelScope.launch {

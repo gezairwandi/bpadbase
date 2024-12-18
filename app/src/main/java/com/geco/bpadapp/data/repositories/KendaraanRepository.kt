@@ -33,6 +33,10 @@ class KendaraanRepository(private val kendaraanDao: KendaraanDao, private val ap
         return kendaraanDao.getKendaraanByNipAsn(instansiId)
     }
 
+    suspend fun getKendaraanByType(tipe: String): List<Kendaraan>? {
+        return kendaraanDao.getKendaraanByTipe(tipe)
+    }
+
     suspend fun getAllKendaraanFromLocal(): List<Kendaraan> {
         return kendaraanDao.getAllKendaraan()
     }

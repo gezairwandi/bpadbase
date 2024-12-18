@@ -34,6 +34,9 @@ class DashboardActivity : AppCompatActivity() {
                 dashboardViewModel.fetchKendaraanFromFirebase(it)
                 binding.swipeRefreshLayout.isRefreshing = false
             }
+            setupDummyData()
+
+//            setupRerkapDataKendaraan()
         }
 
         dashboardViewModel.rekapDataKendaraan.observe(this) {
@@ -60,6 +63,30 @@ class DashboardActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@DashboardActivity)
             adapter = assetAdapter
         }
+
+    }
+
+    private fun setupDummyData(){
+        dashboardViewModel.insertRekapData(RekapDataKendaraan(
+            id = "1",
+            instansi = "Dinas Pendidikan",
+            jenis_roda = "Roda 2",
+            jumlah = "4",
+            jumlahAsn = "4"))
+
+        dashboardViewModel.insertRekapData(RekapDataKendaraan(
+            id = "2",
+            instansi = "Dinas Pendidikan",
+            jenis_roda = "Roda 3",
+            jumlah = "5",
+            jumlahAsn = "3"))
+
+        dashboardViewModel.insertRekapData(RekapDataKendaraan(
+            id = "3",
+            instansi = "Dinas Lingkungan Hidup",
+            jenis_roda = "Roda 4",
+            jumlah = "3",
+            jumlahAsn = "1"))
     }
 
 //    private fun setupSpinner(){
@@ -105,5 +132,68 @@ class DashboardActivity : AppCompatActivity() {
         intent.putExtra("auth_token", token)
         intent.putExtra("instansi_id", instansiId)
         startActivity(intent)
+    }
+
+    private fun setupRerkapDataKendaraan(){
+        dashboardViewModel.filterKendaraanByTipe("Roda 2")
+        dashboardViewModel.filterKendaraanByTipe("Roda 3")
+        dashboardViewModel.filterKendaraanByTipe("Roda 4")
+
+        dashboardViewModel.roda2.observe(this){
+            var jumlah = 0
+            var jumlahAsn = 0
+            it.forEach {
+                jumlah++
+                if(it.nipAsn.toInt()!=0){
+                    jumlahAsn++
+                }
+            }
+
+            dashboardViewModel.insertRekapData(RekapDataKendaraan(
+                id = "1",
+                instansi = it.get(0).instansiId,
+                jenis_roda = "Roda 2",
+                jumlah = jumlah.toString(),
+                jumlahAsn = jumlahAsn.toString())
+            )
+        }
+
+        dashboardViewModel.roda3.observe(this){
+            var jumlah = 0
+            var jumlahAsn = 0
+            it.forEach {
+                jumlah++
+                if(it.nipAsn.toInt()!=0){
+                    jumlahAsn++
+                }
+            }
+
+            dashboardViewModel.insertRekapData(RekapDataKendaraan(
+                id = "2",
+                instansi = it.get(0).instansiId,
+                jenis_roda = "Roda 3",
+                jumlah = jumlah.toString(),
+                jumlahAsn = jumlahAsn.toString())
+            )
+        }
+
+        dashboardViewModel.roda4.observe(this){
+            var jumlah = 0
+            var jumlahAsn = 0
+            it.forEach {
+                jumlah++
+                if(it.nipAsn.toInt()!=0){
+                    jumlahAsn++
+                }
+            }
+
+            dashboardViewModel.insertRekapData(RekapDataKendaraan(
+                id = "3",
+                instansi = it.get(0).instansiId,
+                jenis_roda = "Roda 4",
+                jumlah = jumlah.toString(),
+                jumlahAsn = jumlahAsn.toString())
+            )
+        }
     }
 }

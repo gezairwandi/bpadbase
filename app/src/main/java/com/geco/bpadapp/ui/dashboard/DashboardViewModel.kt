@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.geco.bpadapp.data.models.Asn
-import com.geco.bpadapp.data.models.Asset
 import com.geco.bpadapp.data.models.Instansi
 import com.geco.bpadapp.data.models.Kendaraan
 import com.geco.bpadapp.data.models.RekapDataKendaraan
@@ -33,12 +32,17 @@ class DashboardViewModel(private val asnRepository: AsnRepository,
     private val _kendaraanList = MutableLiveData<List<Kendaraan>>()
     val kendaraanList: LiveData<List<Kendaraan>> get() = _kendaraanList
 
+    private val _roda2 = MutableLiveData<List<Kendaraan>>()
+    val roda2: LiveData<List<Kendaraan>> get() = _roda2
+
+    private val _roda3 = MutableLiveData<List<Kendaraan>>()
+    val roda3: LiveData<List<Kendaraan>> get() = _roda3
+
+    private val _roda4 = MutableLiveData<List<Kendaraan>>()
+    val roda4: LiveData<List<Kendaraan>> get() = _roda4
+
     private val _rekapDataKendaraan = MutableLiveData<List<RekapDataKendaraan>>()
     val rekapDataKendaraan: LiveData<List<RekapDataKendaraan>> get() = _rekapDataKendaraan
-
-
-    private val _filteredAssets = MutableLiveData<List<Asset>>()
-    val filteredAssets: LiveData<List<Asset>> get() = _filteredAssets
 
     fun fetchAsnFromFirebase(authToken: String) {
         viewModelScope.launch {
@@ -70,16 +74,9 @@ class DashboardViewModel(private val asnRepository: AsnRepository,
         }
     }
 
-    fun filterAssetsBy(whereKey: String, whereValue: String) {
+    fun filterKendaraanByTipe(tipe: String) {
         viewModelScope.launch {
-//            _filteredAssets.value =
-//                repository.getAssetsBy(whereKey = whereKey, whereValue = whereValue)
-        }
-    }
-
-    fun loadAssetsFromLocal() {
-        viewModelScope.launch {
-//            _assets.value = repository.getAllAssetsFromLocal()
+            _kendaraanList.value = kendaraanRepository.getKendaraanByType(tipe)
         }
     }
 

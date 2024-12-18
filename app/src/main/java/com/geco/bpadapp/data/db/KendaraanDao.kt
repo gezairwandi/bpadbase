@@ -27,6 +27,9 @@ interface KendaraanDao {
     @Query("SELECT * FROM kendaraan WHERE instansiId = :instansiId")
     suspend fun getKendaraanByInstansi(instansiId: String): List<Kendaraan>?
 
+    @Query("SELECT * FROM kendaraan WHERE tipe = :tipe ")
+    suspend fun getKendaraanByTipe(tipe: String): List<Kendaraan>?
+
     @Update
     suspend fun updateKendaraan(kendaraan: Kendaraan)
 
